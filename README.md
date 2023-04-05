@@ -48,8 +48,7 @@ ARG TORCH_CUDA_ARCH_LIST="Kepler;Kepler+Tesla;Maxwell;Maxwell+Tegra;Pascal;Volta
 ENV TORCH_CUDA_ARCH_LIST="${TORCH_CUDA_ARCH_LIST}"
 RUN pip install --user -e detectron2_repo
 
-RUN apt-get install tesseract-ocr \
-    libtesseract-dev
+
 
 RUN pip install pip install "layoutparser[ocr]"
 

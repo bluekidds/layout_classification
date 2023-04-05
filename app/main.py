@@ -41,7 +41,7 @@ with st.sidebar.expander("Load image files and detect the layout", expanded=True
 
 with st.sidebar.expander('Select Models to perform layout detection', expanded=True):
     select_model = st.selectbox('Select Models: ', ['Magazine', 'Newspaper', 'AcademicPapers'])
-    ocr_selected = st.checkbox('Activate OCR')
+    #ocr_selected = st.checkbox('Activate OCR')
 with st.sidebar.expander('Hyperparameter Selection, use with care'):
     score_thres = st.slider('Score Threshold', 0.5, 0.99, 0.85)
     nms_thres = st.slider('NMS Threshold', 0.5, 0.99, 0.75)
@@ -101,10 +101,14 @@ table_blocks = lp.Layout([b for b in layout if b.type==primaLayout[3]])
 text_blocks = lp.Layout([b for b in text_blocks \
                          if not any(b.is_in(b_fig) for b_fig in image_blocks)])
 
+'''
 if ocr_selected:
     ocr_agent = lp.TesseractAgent(languages='eng')
 else:
     ocr_agent = None
+'''
+ocr_selected = None
+ocr_agent = None
 
 st.markdown('### Display Image Information')
 st.metric(label="Image Size(Height, Width)", value=f'{image.shape[1]}*{image.shape[0]}')
