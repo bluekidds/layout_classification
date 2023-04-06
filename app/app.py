@@ -8,7 +8,7 @@ from typing import List
 
 import layoutparser as lp
 import cv2
-from detect import detect_text_list, detect_text, parse_layout
+from detect import parse_layout
 
 
 model = lp.AutoLayoutModel("lp://detectron2/PrimaLayout/mask_rcnn_R_50_FPN_3x",
