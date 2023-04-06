@@ -3,13 +3,10 @@ from PIL import Image
 from io import BytesIO
 import base64
 import json
-from detect import parse_layout_api
 from typing import List
 
 import layoutparser as lp
 import cv2
-from detect import parse_layout
-
 
 model = lp.AutoLayoutModel("lp://detectron2/PrimaLayout/mask_rcnn_R_50_FPN_3x",
                            label_map = {1:"TextRegion", 2:"ImageRegion", 3:"TableRegion",
@@ -25,6 +22,24 @@ label_mapping = {'TextRegion': 'text', 'ImageRegion': 'image', 'TableRegion': 't
 # base64 -> Image
 # In test file, turn image to base64
 
+def parse_layout(layout, ocr_agent, image, ocr_selected=False):
+    layout_collections = list()
+    for ob in layout:
+        layout_dic = dict()
+        layout_dic['id'] = ob.id
+        layout_dic['detect_type'] = ob.type
+        #if ocr_selected:
+        #    layout_dic['text'] = detect_text(ocr_agent, ob, image)
+        layout_dic['parent'] = ob.parent
+        layout_dic['rect_left'] = ob.block.coordinates[0]
+        layout_dic['rect_right'] = ob.block.coordinates[1]
+
+        layout_dic['confidence'] = ob.score
+        # layout_dic['']
+        layout_collections.append(layout_dic)
+    detected_info = pd.DataFrame(layout_collections)
+
+    return detected_info
 
 def transform_and_detect(image_base64_str):
     '''
