@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import layoutparser as lp
 import cv2
 from pdf2image import convert_from_path, convert_from_bytes
-from detect import detect_text_list, detect_text, parse_layout
+from detect import parse_layout
 
 primaLayout = {1:"TextRegion", 2:"ImageRegion", 3:"TableRegion", 4:"MathsRegion",
                5:"SeparatorRegion", 6:"OtherRegion"}

@@ -2,7 +2,7 @@
 
 FROM python:3.9-slim
 
-EXPOSE 8501
+EXPOSE 8051
 
 WORKDIR /app
 
@@ -15,15 +15,18 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install layoutparser torchvision && pip install "git+https://github.com/facebookresearch/detectron2.git@v0.5#egg=detectron2"
 
-RUN apt-get install tesseract-ocr \
-    libtesseract-dev
 
 RUN pip install pip install "layoutparser[ocr]"
 
-RUN git clone https://github.com/bluekidds/layout_classification.git .
+#RUN git clone https://github.com/bluekidds/layout_classification.git .
 
-RUN pip install "pinferencia[streamlit]"
+RUN pip install "pinferencia"
+
+RUN git clone https://github.com/bluekidds/layout_classification.git .
 
 RUN pip3 install -r requirements.txt
 
+#RUN pinfer app:service --reload
+
+#ENTRYPOINT ["uvicorn", "app.app:service", "--reload"]
 ENTRYPOINT ["streamlit", "run", "app/main.py", "--server.port=8501", "--server.address=0.0.0.0"]
